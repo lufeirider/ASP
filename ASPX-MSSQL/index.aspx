@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Debug="true" %>
+<%@ Page Language="C#" Debug="true" %>
 <%@ Import Namespace="System.Data" %>
 <%@ Import namespace="System.Data.SqlClient"  %>
 <!DOCTYPE html>
@@ -6,9 +6,14 @@
      private DataSet resSet=new DataSet();
     protected void Page_Load(object sender, EventArgs e)
     {
-        String strconn = "server=.;database=guest;uid=sa;pwd=sa";
+        //增加了数据库连接池
+        String strconn = "Max Pool Size=512;server=.;database=guest;uid=sa;pwd=qq123456";
         string id = Request.Params["id"];
-        string sql = string.Format("select * from [user] where id ={0}", id);
+        string user = Request.Params["user"];
+        //string sql = string.Format("select * from [user] where id ={0}", id);
+        string sql = string.Format("select * from [user] where id ='{0}'", id);
+        //string sql = string.Format("select * from [user] where name ='{0}'", user);
+        //Response.Write("执行语句:<br>" + sql); return;
         SqlConnection connection=new SqlConnection(strconn);
         connection.Open();
         SqlDataAdapter dataAdapter = new SqlDataAdapter(sql, connection);
@@ -17,12 +22,13 @@
         DgData.DataBind();
         Response.Write("执行语句:<br>"+sql);
         Response.Write("<br>结果为:");
+         //一定记得关闭连接，不然数据库连接池容易满
+        connection.Close();
     }
-
 </script>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
+<head id="Head1" runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
 </head>
